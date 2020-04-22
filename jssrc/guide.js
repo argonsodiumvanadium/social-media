@@ -1,4 +1,7 @@
 const SITE_NAME = "NAME"
+const PORT = "9000";
+const IP = "ec2-13-232-236-137.ap-south-1.compute.amazonaws.com"
+
 
 $ = args => {
 	return document.getElementById(args)
@@ -95,7 +98,7 @@ register = btn => {
 }
 
 validate = async data => {
-	socket = new WebSocket('ws://127.0.0.1:9000/register');
+	socket = new WebSocket('ws://'+IP+':'+PORT+'/register');
 
 	socket.onopen = async function() {
 		socket.send(data)
