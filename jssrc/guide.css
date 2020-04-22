@@ -1,0 +1,138 @@
+#body {
+	background-color: #444444
+}
+
+.heading {
+	padding-left: 5vw;
+	color: white;
+
+	-webkit-transition: all 500ms ease-in-out;
+	-moz-transition: all 500ms ease-in-out;
+	-o-transition: all 500ms ease-in-out;
+	-ms-transition: all 500ms ease-in-out;
+	transition: all 500ms ease-in-out;
+}
+
+.heading h1{
+	font-size: 12vw;
+	font-family: 'Roboto Condensed', sans-serif;
+	padding: 0vw;
+	padding-left: 1.5vw;
+	margin-bottom: 0vw;
+	text-shadow: 4px 4px 4px black;
+
+	-webkit-transition: all 500ms ease-in-out;
+	-moz-transition: all 500ms ease-in-out;
+	-o-transition: all 500ms ease-in-out;
+	-ms-transition: all 500ms ease-in-out;
+	transition: all 500ms ease-in-out;
+}
+
+.heading p {
+	font-size: 1.5vw;
+	margin: 1vw;
+	font-family: 'Spartan', sans-serif;
+	padding-left: 1.5vw;
+	margin:0vw;
+	text-shadow: 2px 2px 10px #444444;
+
+	-webkit-transition: all 500ms ease-in-out;
+	-moz-transition: all 500ms ease-in-out;
+	-o-transition: all 500ms ease-in-out;
+	-ms-transition: all 500ms ease-in-out;
+	transition: all 500ms ease-in-out;
+}
+
+#form-holder {
+	position: fixed;
+	right: 5vw;
+	width: 40%;
+	height: 70%;
+	bottom: 15%;
+	background-color: #eeeeee;
+
+	/*-webkit-filter: blur(10px);
+	-moz-filter: blur(10px);
+	-o-filter: blur(10px);
+	-ms-filter: blur(10px);
+	filter: blur(10px);*/
+
+	-webkit-transition: all 500ms ease-in-out;
+	-moz-transition: all 500ms ease-in-out;
+	-o-transition: all 500ms ease-in-out;
+	-ms-transition: all 500ms ease-in-out;
+	transition: all 500ms ease-in-out;
+
+	overflow: hidden;
+
+	background-color: rgba(0,0,0,0.6);
+	box-shadow: 15px 15px 13px black;
+}
+
+#form {
+	position: fixed;
+	right: 5vw;
+	width: 40%;
+	height: 70%;
+	bottom: 15%;
+
+	background-color: rgba(0,0,0,0);
+	font-family: 'Spartan', sans-serif;
+
+	-webkit-transition: all 500ms ease-in-out;
+	-moz-transition: all 500ms ease-in-out;
+	-o-transition: all 500ms ease-in-out;
+	-ms-transition: all 500ms ease-in-out;
+	transition: all 500ms ease-in-out;
+}
+
+#form button {
+	display: block;
+	margin: auto;
+	width:60%;
+	color: white;
+	border-color: transparent;
+	padding-top: 2vw;
+	padding-bottom: 3vw;
+	font-size: 3vw;
+	text-align: center;
+	background-color: transparent;
+	font-family: 'Roboto Condensed', sans-serif;
+
+	-webkit-transition: all 500ms ease-in-out;
+	-moz-transition: all 500ms ease-in-out;
+	-o-transition: all 500ms ease-in-out;
+	-ms-transition: all 500ms ease-in-out;
+	transition: all 500ms ease-in-out;
+}
+
+#form input {
+	background-color: rgba(0,0,0,0);
+
+	display: block;
+	width: 60%;
+	font-size: 1vw;
+	margin: 3vw 20% 0px 20%;
+	color: white;
+	border-color: transparent;
+	border-bottom-color: white;
+
+	-webkit-transition: all 500ms ease-in-out;
+	-moz-transition: all 500ms ease-in-out;
+	-o-transition: all 500ms ease-in-out;
+	-ms-transition: all 500ms ease-in-out;
+	transition: all 500ms ease-in-out;
+}
+
+#form input::placeholder {
+	color: gray;
+	opacity: 0.5; /* Firefox */
+}
+
+#form input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: gray;
+}
+
+#form input::-ms-input-placeholder { /* Microsoft Edge */
+	color: gray;
+}

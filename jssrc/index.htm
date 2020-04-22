@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Spartan:wght@300&display=swap" rel="stylesheet">
+	<script type="text/javascript" src="guide.js"></script>
+	<link rel="stylesheet" type="text/css" href="guide.css">
+	<title id="title"></title>
+</head>
+<body id="body" >
+	<div class="heading" id="heading">
+		<h1>{{ name }}</h1>
+		<p>{{ content }}</p>
+	</div>
+
+	<div id="form-holder"></div>
+		<div id="form">
+			<input type="text" placeholder="full name" id="n">
+			<input type="text" placeholder="username" id="u">
+			<input type="password" placeholder="password" id="p">
+			<input type="password" placeholder="confirm password" id="r">
+			<button id="su" onclick = "register(this);" style="border-bottom-color: white">
+				Sign Up
+			</button>
+			<button id="li" onclick="changeSlowly(this)" style="margin-top: 1vw;">
+				Log In
+			</button>
+		</div>
+
+	<script type="text/javascript">
+		render("signup");
+	</script>
+</body>
+</html>
