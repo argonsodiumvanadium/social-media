@@ -20,6 +20,9 @@ button:hover {
 }
 
 #content {
+    background-repeat: no-repeat;
+    background-size:     cover;
+    background-position: center center;              
 	position: fixed;
 	z-index: 1;
 	height: 100%;
@@ -843,4 +846,24 @@ button:hover {
 #room-options:hover {
     background-color: #0099ff;
     cursor: pointer;
+}
+
+.setting-input-dialog {
+    float: right;
+    margin-right: 40%;
+    margin-top: 1vw;
+    font-size: 1vw;
+    padding: 0.5vw;
+    display: inline-block;
+    width: 25%;
+    background-color: transparent;
+    border-color: rgba(0,0,0,0);
+    border-bottom-color: #330000;
+    color: #660000;
+    font-family: 'Roboto Condensed',sans-serif;
+}
+
+.setting-input-dialog:focus {
+    border-bottom-color: #ff4400;
+    color: #ff6600;
 }

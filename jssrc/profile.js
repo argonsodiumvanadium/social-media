@@ -9,14 +9,14 @@ var LikedBy = []
 getProfileDataFor = name => {
 	document.body.scrollTop = 0;
 	document.documentElement.scrollTop = 0;
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");
 	}
 
 	socket.onerror = function(error) {
-		alert("Connection error either the server or you are offline");
+		//alert("Connection error either the server or you are offline");
 	};
 
 	socket.onopen = async function () {
@@ -92,7 +92,7 @@ renderProfile = data => {
 	nameAndAll = gen("p");
 	nameAndAll.innerHTML = "<b>"+data.BasicData.Username+"</b><br>"+data.BasicData.Name;
 	bio = gen("p");
-	bio.textContent = choose(data.Bio,"bio");
+	bio.textContent = choose(data.BasicData.Bio,"bio");
 
 	var divide2 = gen("div");
 	divide2.className = "divide";
@@ -333,9 +333,9 @@ getConnection = user => {
 		var ret = "No Connection to You";
 		if (user.SocialRelations.Friends[user_data.Username] != undefined) {
 			ret = user.SocialRelations.Friends[user_data.Username].Affiliation;
-			if (user.SocialRelations.Friends[user_data.Username].Nickname != undefined) {
+			/*if (user.SocialRelations.Friends[user_data.Username].Nickname != undefined) {
 				ret += ", whom you Lovingly call "+user.Nickname;
-			}
+			}*/
 		}
 		return ret
 	}
@@ -431,7 +431,7 @@ updateLike = (my_user,index,update) => {
 	}
 	console.log(LikedBy)
 
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");
@@ -466,7 +466,7 @@ sendCommentDataToServer = (my_user,arg,index,update) => {
 		initializer.r = "U-"
 	}
 
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");
@@ -508,7 +508,7 @@ friend = (good,my_user) => {
 		initializer.r = "F-"
 	}
 
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");
@@ -539,14 +539,14 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 		c : data.BasicData.Username
 	};
 
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");
 	}
 
 	socket.onerror = function(error) {
-		alert("Connection error either the server or you are offline");
+		//alert("Connection error either the server or you are offline");
 	};
 
 	socket.onopen = async function () {
@@ -587,7 +587,7 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 					onclick : function () {
 						defineRelation(this.owner)
 					}
-				},*/{
+				},{
 					value : "Bind Account",
 					backCol : CYAN,
 					frontCol : WHITE,
@@ -603,7 +603,7 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 					onclick : function () {
 						getSubAccounts(this.owner)
 					}
-				},
+				},*/
 			]
 			renderAndAddButtons(frndButtonData,buttonRelay)
 		} else if (Object.keys(data.SocialRelations.Followers).indexOf(username) != -1) {
@@ -617,7 +617,7 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 						friend(false,this.owner);
 						LoadUserButtons(this.owner,$("btn-relay"))
 					}
-				},{
+				},/*{
 					value : "Message",
 					backCol : GRAY,
 					frontCol : WHITE,
@@ -639,7 +639,7 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 					onclick : function () {
 						defineRelation(this.owner)
 					}
-				},*/{
+				},{
 					value : "Bind Account",
 					backCol : CYAN,
 					frontCol : WHITE,
@@ -655,7 +655,7 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 					onclick : function () {
 						getSubAccounts(this.owner)
 					}
-				},
+				},*/
 			]
 
 			if (data.AccountType == PUBL) {
@@ -670,9 +670,10 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 					frontCol : WHITE,
 					owner : data.BasicData.Username,
 					onclick : function () {
-						editAccount(this.owner)
+						renderComponent("Settings")
+						updateUser()
 					}
-				},{
+				}/*,{
 					value : "See Root",
 					backCol : BLUE,
 					frontCol : WHITE,
@@ -680,7 +681,7 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 					onclick : function () {
 						displayRoot(this.owner)
 					}
-				},
+				},*/
 			]
 			renderAndAddButtons(meButtonData,buttonRelay);
 		} else {
@@ -693,7 +694,7 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 						friend(true,this.owner);
 						LoadUserButtons(this.owner,$("btn-relay"))
 					}
-				},{
+				},/*{
 					value : "Message",
 					backCol : GRAY,
 					frontCol : WHITE,
@@ -701,7 +702,7 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 					onclick : function () {
 							alert("You can not message people you don't follow")
 					}
-				},/*{
+				},{
 					value : "Define Relation",
 					backCol : GRAY,
 					frontCol : WHITE,
@@ -709,7 +710,7 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 					onclick : function () {
 						alert("You don't even follow this person")
 					}
-				},*/{
+				},{
 					value : "Bind Account",
 					backCol : CYAN,
 					frontCol : WHITE,
@@ -725,7 +726,7 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 					onclick : function () {
 						getSubAccounts(this.owner)
 					}
-				},
+				},*/
 			]
 			renderAndAddButtons(anonymButtonData,buttonRelay);
 		}

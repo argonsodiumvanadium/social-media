@@ -2,6 +2,7 @@ package main
 
 import (
 	_"gopkg.in/yaml.v2"
+	"encoding/json"
 	"fmt"
 	"encoding/gob"
 	"io/ioutil"
@@ -85,7 +86,31 @@ func initPrereq() {
 func setUpRoutes() {
 	http.HandleFunc("/register", session.registerUser)
 	http.HandleFunc("/chat", session.joinRoom)
+	http.HandleFunc("/settings", session.editUser)
 	http.HandleFunc("/", session.serve)
+}
+
+func (self *Session) editUser (writer http.ResponseWriter, reader *http.Request) {
+	fmt.Println("settings")
+	upgrader.CheckOrigin = func(r *http.Request) bool {
+		return true
+	}
+
+	conn, err := upgrader.Upgrade(writer, reader, nil)
+	handleErr(err)
+	mType,msg,err := conn.ReadMessage()
+	handleErr(err)
+
+	u := &self.Users[string(msg)].BasicData
+
+	val,err := json.Marshal(*u)
+	handleErr(err)
+	conn.WriteMessage(mType,val)
+
+	_,user,err := conn.ReadMessage()
+	err = json.Unmarshal(user,*u)
+	fmt.Printf("%+v",self.Users[string(msg)].BasicData.ProfilePic)
+	handleErr(err)
 }
 
 func SetupCloseHandler() {

@@ -109,7 +109,7 @@ proccessAndPost = (src,type,info) => {
 		c : "",
 	}
 
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");

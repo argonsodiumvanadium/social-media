@@ -1,18 +1,42 @@
 var feed_LikedBy = new Array();
 var feedObj;
 var feed = null;
+var stop = false;
 
 loadFeed = () => {
+	reqForMore()
+
 	if ($("undernav") != null) {
 		$("undernav").style.display = "none";
 	}
+
+	$("content").onscroll = function() {
+	  var offset = this.scrollTop;
+	  var height = this.scrollHeight;
+
+	  if ((offset+4500) >= height) {
+		  console.log(stop)
+		  if (!stop) {
+			 console.log("call")
+			  reloadFeed()
+		  }
+	  }
+	}
+	heading = gen("p")
+	heading.id = 'activity-tab-heading';
+	heading.textContent = "Your Feed";
+
+	$("content").appendChild(heading);
+}
+
+reqForMore = () => {
 	var req = {
 		r : "F*",
 		g : username,
 		c : "",
 	}
 
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");
@@ -34,18 +58,14 @@ loadFeed = () => {
 			heading = gen("p")
 		    heading.id = 'activity-tab-heading';
 		    heading.textContent = "Your Feed";
-
+			stop = true
 		    $("content").appendChild(heading);
             renderFeed(new Array())
         } else if (event.data.length == 0) {
-
+			stop = true
 		} else {
-			heading = gen("p")
-		    heading.id = 'activity-tab-heading';
-		    heading.textContent = "Your Feed";
-
-		    $("content").appendChild(heading);
             feed = JSON.parse(event.data)
+			console.log(feed.length)
             renderFeed(feed);
         }
 	}
@@ -57,7 +77,7 @@ reloadFeed = () => {
 		g : username,
 		c : "",
 	}
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");
@@ -73,12 +93,17 @@ reloadFeed = () => {
 	}
 
 	socket.onmessage = async function (event) {
-		if (event.data == "B") {
-            renderFeed(new Array())
-        } else {
-            feed = JSON.parse(event.data)
-            renderFeed(feed);
-        }
+		try {
+			if (event.data == "B") {
+	            renderFeed(new Array())
+				stop = true;
+	        } else {
+	            feed = JSON.parse(event.data)
+	            renderFeed(feed);
+	        }
+		} catch (e) {
+			stop = true;
+		}
 	}
 }
 
@@ -88,7 +113,6 @@ renderFeed = newfeed => {
 	} else {
 		feed = [ ...feed , ...newfeed.reverse()]
 	}
-    console.log("rend")
 
     if (newfeed.length == 0) {
         heading = gen("p")
@@ -138,7 +162,6 @@ renderFeed = newfeed => {
                     $("content").appendChild(container);
                     break;
             }
-			console.log(post.LikedBy[username] == undefined || !post.LikedBy[username]);
             var like_btn;
             if (post.LikedBy[username] == undefined || !post.LikedBy[username]) {
     			like_btn = {
@@ -153,7 +176,6 @@ renderFeed = newfeed => {
     				}
     			}
     		} else {
-				console.log("in elese")
     			like_btn = {
     				value : '<span id="like-span'+i+'" style="margin-top:0vw;color:'+LIKE_BTN_COL+';">&#9829;</span>',
     				backCol : WHITE,
@@ -188,7 +210,6 @@ function handleFeedLikeBtnHoverEvents () {
     for(var i=0;i<feed.length;i++) {
         var para = gen("p");
         para.id = "like-num"+i;
-        console.log(para.id);
         para.style.position = "relative";
         para.style.left = "0%";
         para.style.top = "0%";
@@ -198,8 +219,6 @@ function handleFeedLikeBtnHoverEvents () {
         para.style.display = "none";
         para.style.fontSize = '0.8vw';
         para.textContent = feed[i].Likes.toString();
-
-		console.log(para.textContent)
 
         $("like-btn"+i).appendChild(para)
 
@@ -296,7 +315,7 @@ sendFeedCommentDataToServer = (owner,val,index,update) => {
 		initializer.r = "U-"
 	}
 
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");
@@ -358,7 +377,7 @@ updateFeedLike = (index,liked) => {
 		console.log("rm a like")
 	}
 
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");

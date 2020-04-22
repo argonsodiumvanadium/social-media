@@ -2,7 +2,7 @@ var colorPallete = {}
 
 async function openRoomCreationDialog() {
     var SocRelData;
-    var socket = new WebSocket('ws://localhost:'+PORT);
+    var socket = new WebSocket('ws://'+IP+':'+PORT);
     var members = new Array();
 
 	if (!window.WebSocket) {
@@ -110,7 +110,7 @@ async function openRoomCreationDialog() {
 }
 
 sendRoomCreationDataAndCreateRoom = (name,members) => {
-    var socket = new WebSocket('ws://localhost:'+PORT);
+    var socket = new WebSocket('ws://'+IP+':'+PORT);
 
     members.push(username)
 
@@ -149,7 +149,7 @@ renderRoom = r_name => {
     var presentRoom;
     r_name = r_name.trim();
 
-    var socket = new WebSocket('ws://localhost:'+PORT);
+    var socket = new WebSocket('ws://'+IP+':'+PORT);
     var init = {
         r : "R#",
         g : username,
@@ -206,17 +206,47 @@ function renderBase(room) {
         	}
 	}
 
-    roomEditor = gen("div");
+    /*roomEditor = gen("div");
     roomEditor.id = "room-options";
     roomEditor.innerHTML = "<span class=\"fa fa-bars\" style='margin:0vw;font-size:2.4vw;color:#ffffff;'></span>"
-    roomEditor.onclick = function () {
-        $("modal-heading").textContent = "Edit Room"
-        $("modal").style.zIndex = "10";
-        $("modal").style.opacity = "1";
-        await sleep(500);
-    }
+    roomEditor.onclick = async function () {
+        var presentRoom;
+        r_name = r_name.trim();
 
-    $("content").appendChild(roomEditor);
+        var socket = new WebSocket('ws://'+IP+':'+PORT);
+        var init = {
+            r : "R#",
+            g : username,
+            c : r_name,
+        }
+
+    	if (!window.WebSocket) {
+    		alert("Your browser does not support web sockets");
+    	}
+
+    	socket.onerror = function(error) {
+    		//alert("Connection error either the server or you are offline");
+    	};
+
+    	socket.onmessage = function(event) {
+            presentRoom = JSON.parse(event.daya)
+            imsd = gen("div")
+            imsd.id = ('inner-modal-space-div')
+            imsd.appendChild()
+
+            $("modal-heading").textContent = "Edit Room"
+            $("modal").style.zIndex = "10";
+            $("modal").style.opacity = "1";
+            await sleep(500);
+    	}
+
+    	socket.onopen = function () {
+            socket.send(JSON.stringify(init));
+        }
+
+    }*/
+
+    //$("content").appendChild(roomEditor);
     $("content").appendChild(msgHolder);
     $("content").appendChild(msgInput);
     openConnectionAndStartListening(room)
@@ -228,7 +258,7 @@ var conn;
 openConnectionAndStartListening = room => {
     var presentRoom;
 
-    conn = new WebSocket('ws://localhost:'+PORT+'/chat');
+    conn = new WebSocket('ws://'+IP+':'+PORT+'/chat');
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");

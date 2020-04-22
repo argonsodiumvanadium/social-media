@@ -40,6 +40,7 @@ const (
 	CREATE_ROOM      = "R+"
 	GET_ROOM_DATA    = "R#"
 	JOIN_ROOM        = "r#"
+	EDIT_ROOM        = "ER"
 
 	RESUME_FEED      = "f*"
 
@@ -114,6 +115,10 @@ func (self Request) ChooseAction(call_session *Session, reader *websocket.Conn) 
 		val,err := json.Marshal(session.Users[self.Generator].MessagingEssentials.RoomsByName[self.Consumer])
 		handleErr(err)
 		fmt.Printf("%+v\n",session.Users[self.Generator].MessagingEssentials)
+		return val
+	case EDIT_ROOM:
+		val,err := json.Marshal(session.Users[self.Generator].MessagingEssentials.RoomsByName[self.Consumer])
+		handleErr(err)
 		return val
 	case SEARCH:
 		res := call_session.SearchForString(self.Consumer)

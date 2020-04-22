@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="profile.js"></script>
 	<script type="text/javascript" src="messaging.js"></script>
 	<script type="text/javascript" src="activity.js"></script>
+	<script type="text/javascript" src="settings.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<title id="title"></title>
@@ -37,10 +38,10 @@
 		<h1 onclick="refreshJS();">
 			{{ name }}
 		</h1>
-		<button onclick="renderComponent(this);" v-for="opt in options">
+		<button onclick="renderComponent(this.textContent);" v-for="opt in options">
 			{{ opt }}
 		</button>
-		<button onclick="renderComponent(this)" style="float: right;margin-top: 3.2vw;margin-right: 1vw;" v-for="setting in user_controls">
+		<button onclick="renderComponent(this.textContent)" style="float: right;margin-top: 3.2vw;margin-right: 1vw;" v-for="setting in user_controls">
 			{{ setting }}
 		</button>
 	</div>

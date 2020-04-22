@@ -14,7 +14,7 @@ type (
 		ParentRoom string
 		Participants []string
 		Admins []string
-		Messages []string
+		Messages []string  `json:"-"`
 		Id int
 		//Access string
 		BannedUsers []string

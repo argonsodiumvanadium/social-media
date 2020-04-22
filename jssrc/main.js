@@ -1,5 +1,6 @@
 const SITE_NAME = "NAME";
 const PORT = "9000";
+const IP = "ec2-13-232-236-137.ap-south-1.compute.amazonaws.com"
 
 const GREEN = "#00dd44",WHITE = "#ffffff";
 const BACK_GRAY = "#777777",RED = "#ff4400";
@@ -76,7 +77,7 @@ load = async args => {
 
 initPrereq = () => {
 	$("title").textContent = SITE_NAME;
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 	var user_data1,user_data2
 
 	if (!window.WebSocket) {
@@ -88,8 +89,8 @@ initPrereq = () => {
 	};
 
 	socket.onmessage = function(event) {
-		console.log(event.data);
 		user_data = JSON.parse(event.data);
+		console.log(user_data);
 		user_data.BasicData = user_data;
 		socket.close();
 		renderVue();
@@ -107,7 +108,7 @@ initPrereq = () => {
 
 updateUser = () => {
 	$("title").textContent = SITE_NAME;
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");
@@ -137,6 +138,11 @@ async function renderVue (){
 	if (user_data.BasicData.RoomNames == null) {
 		user_data.BasicData.RoomNames = new Array();
 	}
+	if (user_data.BackGroundImg != null ) {
+		console.log("url ('"+user_data.BackGroundImg+"')")
+		$("content").style.backgroundImage ="url('"+ user_data.BackGroundImg.replace(/(\r\n|\n|\r)/gm, "") + "')";
+		console.log($("content").style.backgroundImage)
+	}
 	//$("prof-img").src = "data:image/png;base64,"+user_data.ProfilePic.Data;
 	//console.log($("prof-img").src)
 	console.log("rend")
@@ -154,8 +160,8 @@ async function renderVue (){
 		el   : "#topnav",
 		data : {
 			name          : SITE_NAME,
-			options       : ["Home","Discover","Events","Share","Me"],
-			user_controls : ["Settings","Root","Activity"],
+			options       : ["Home",/*"Discover","Events",*/"Share","Me"],
+			user_controls : ["Settings"/*,"Root"*/,"Activity"],
 		}
 	});
 
@@ -178,7 +184,7 @@ function getRandomColor() {
 }
 
 Search = str => {
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 	console.log("start")
 
 	if (!window.WebSocket) {
@@ -238,28 +244,32 @@ Search = str => {
 }
 
 renderComponent = comp => {
-	console.log(comp.textContent);
-	empty($("content"));
-	document.body.scrollTop = 0;
-	document.documentElement.scrollTop = 0;
-	switch (comp.textContent.trim()) {
-	case "Me":
-		getProfileDataFor(user_data.Username);
-		break;
-	case "Share":
-		renderSharePane();
-		break;
-	case "Activity":
-		getActivityDataForRenderingActivityPane();
-		break;
-	case "Home":
-		renderVue();
+	console.log(comp)
+	if (comp.trim() == "Settings") {
+		renderSettings();
+	} else {
+		empty($("content"));
+		document.body.scrollTop = 0;
+		document.documentElement.scrollTop = 0;
+		switch (comp.trim()) {
+			case "Me":
+			getProfileDataFor(user_data.Username);
+			break;
+			case "Share":
+			renderSharePane();
+			break;
+			case "Activity":
+			getActivityDataForRenderingActivityPane();
+			break;
+			case "Home":
+			renderVue();
+		}
 	}
 }
 
 
 sendBye = () => {
-	var socket = new WebSocket('ws://localhost:'+PORT);
+	var socket = new WebSocket('ws://'+IP+':'+PORT);
 
 	if (!window.WebSocket) {
 		alert("Your browser does not support web sockets");
