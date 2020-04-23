@@ -84,6 +84,8 @@ renderModalViewForSettings = async user => {
         console.log("send")
         console.log(user)
         socket.send(JSON.stringify(user))
+        socket.close()
+        $("close").click()
     }
     btn.textContent = "Change"
 

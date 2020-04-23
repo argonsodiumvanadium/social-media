@@ -22,7 +22,7 @@ button:hover {
 #content {
     background-repeat: no-repeat;
     background-size:     cover;
-    background-position: center center;              
+    background-position: center center;
 	position: fixed;
 	z-index: 1;
 	height: 100%;
@@ -229,9 +229,16 @@ button:hover {
 }
 
 #undernav .divide img {
-	height: 12vw;
 	display: block;
 	margin: auto;
+    max-width: 70%;
+    max-height:70%;
+    min-width: 65%;
+    border-radius: 10vw;
+}
+
+#undernav .divide img:hover {
+    border-radius: 0vw;
 }
 
 #undernav .divide p {

@@ -4,7 +4,7 @@ var feed = null;
 var stop = false;
 
 loadFeed = () => {
-	reqForMore()
+	startFeed()
 
 	if ($("undernav") != null) {
 		$("undernav").style.display = "none";
@@ -22,6 +22,7 @@ loadFeed = () => {
 		  }
 	  }
 	}
+
 	heading = gen("p")
 	heading.id = 'activity-tab-heading';
 	heading.textContent = "Your Feed";
@@ -29,7 +30,7 @@ loadFeed = () => {
 	$("content").appendChild(heading);
 }
 
-reqForMore = () => {
+startFeed = () => {
 	var req = {
 		r : "F*",
 		g : username,
@@ -55,11 +56,6 @@ reqForMore = () => {
         console.log(event.data)
 
 		if (event.data == "B") {
-			heading = gen("p")
-		    heading.id = 'activity-tab-heading';
-		    heading.textContent = "Your Feed";
-			stop = true
-		    $("content").appendChild(heading);
             renderFeed(new Array())
         } else if (event.data.length == 0) {
 			stop = true
@@ -117,7 +113,6 @@ renderFeed = newfeed => {
     if (newfeed.length == 0) {
         heading = gen("p")
         heading.id = 'activity-tab-heading';
-        heading.textContent = "Your Feed";
         heading.innerHTML = "<span style='color:#ff3033;font-family: \"Spartan\", sans-serif;font-size: 3.5vw;'>Well thats Your feed For the day</span>"
         $("content").appendChild(heading);
     } else {

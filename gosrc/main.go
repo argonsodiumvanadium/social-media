@@ -1,7 +1,6 @@
 package main
 
 import (
-	_"gopkg.in/yaml.v2"
 	"encoding/json"
 	"fmt"
 	"encoding/gob"

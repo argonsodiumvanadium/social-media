@@ -658,9 +658,9 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 				},*/
 			]
 
-			if (data.AccountType == PUBL) {
+			/*if (data.AccountType == PUBL) {
 				fllwrsButtonData[1].backCol = BLUE;
-			}
+			}*/
 			renderAndAddButtons(fllwrsButtonData,buttonRelay);
 		} else if (data.BasicData.Username == username) {
 				var meButtonData = [

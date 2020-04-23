@@ -176,7 +176,10 @@ func (self *Session) buildUser(name, username, password string) {
 		Name:       name,
 		Username:   username,
 		Password:   password,
-		ProfilePic: def_profile,
+		ProfilePic: &Post {
+			Data : def_profile.Data,
+			Owner : username,
+		},
 	}
 
 	user.ProfileData = &ProfileData{
