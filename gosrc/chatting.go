@@ -72,7 +72,7 @@ func (self *Session) joinRoom (writer http.ResponseWriter, reader *http.Request)
 	r := self.RoomStorage[roomIndex]
 	room := &r
 	messages := make([]string,0)
-	if len((**room).Messages) != 0 {
+	if (**room).Messages != nil {
 		messages = (**room).Messages
 	}
 
