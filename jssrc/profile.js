@@ -571,7 +571,7 @@ getSocialRelationDataAndBuildButtons = (data,buttonRelay) => {
 						friend(false,this.owner);
 						LoadUserButtons(this.owner,$("btn-relay"))
 					}
-				},{
+				},/*{
 					value : "Message",
 					backCol : BLUE,
 					frontCol : WHITE,

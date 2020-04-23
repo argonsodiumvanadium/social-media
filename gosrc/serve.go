@@ -56,7 +56,7 @@ const (
 )
 
 func (self *Session) serve(writer http.ResponseWriter, reader *http.Request) {
-	fmt.Println("\u001B[92mServe Connection \u001B[0m:", reader.RemoteAddr)
+	appendToLogFile("\u001B[92mServe Connection \u001B[0m:", reader.RemoteAddr)
 
 	upgrader.CheckOrigin = func(r *http.Request) bool {
 		return true
@@ -72,11 +72,11 @@ func (self *Session) makeReader(conn *websocket.Conn) {
 	request, msg := Request{}, []byte("")
 
 	messageType, recv, err := conn.ReadMessage()
-	fmt.Println("object :",string(recv))
+	appendToLogFile("object :",string(recv))
 	handleErr(err)
 	err = json.Unmarshal(recv, &request)
 
-	fmt.Println("\u001B[96mrequest\u001B[0m : BY-", request.Generator, "FOR-", request.Consumer, "TODO-", request.Req)
+	appendToLogFile("\u001B[96mrequest\u001B[0m : BY-", request.Generator, "FOR-", request.Consumer, "TODO-", request.Req)
 	handleErr(err)
 
 	msg = request.ChooseAction(self, conn)
@@ -132,7 +132,7 @@ func (self Request) ChooseAction(call_session *Session, reader *websocket.Conn) 
 		handleErr(json.Unmarshal(postJSONData, &post))
 		call_session.Users[self.Generator].PostData(&post)
 	case FOLLOW:
-		fmt.Println("Follow")
+		appendToLogFile("Follow")
 		call_session.Users[self.Generator].Follow(call_session.Users[self.Consumer])
 	case UNFOLL:
 		call_session.Users[self.Generator].Unfollow(call_session.Users[self.Consumer])
@@ -145,7 +145,7 @@ func (self Request) ChooseAction(call_session *Session, reader *websocket.Conn) 
 			call_session.Users[self.Generator].Like(self.Consumer, updata.PostIndex)
 		}
 		if updata.Comment != "" {
-			fmt.Println(updata.Comment)
+			appendToLogFile(updata.Comment)
 			updata.Comment = "<b>" + self.Generator + "</b><br>" + updata.Comment;
 			call_session.Users[self.Generator].Comment(self.Consumer, updata.PostIndex, updata.Comment)
 		}
@@ -155,7 +155,7 @@ func (self Request) ChooseAction(call_session *Session, reader *websocket.Conn) 
 		var updata PostUpdateData
 		handleErr(json.Unmarshal(postJSONData, &updata))
 		if updata.ChangeLike {
-			fmt.Println("Removing likes")
+			appendToLogFile("Removing likes")
 			call_session.Users[self.Generator].DeLike(self.Consumer, updata.PostIndex)
 		}
 		if updata.Comment != "" {
@@ -165,7 +165,7 @@ func (self Request) ChooseAction(call_session *Session, reader *websocket.Conn) 
 	case BYE:
 		call_session.setAsInactive(self.Generator)
 	default:
-		fmt.Println("Unknown Command")
+		appendToLogFile("Unknown Command")
 	}
 
 	return []byte("")

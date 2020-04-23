@@ -67,11 +67,12 @@ func (self *Session) joinRoom (writer http.ResponseWriter, reader *http.Request)
 	roomIndex,err := strconv.Atoi(string(val))
 	handleErr(err)
 
-	//fmt.Printf("%+v\n",*conn)
+	fmt.Printf("%+v\n",*self.RoomStorage[roomIndex])
 	session.ActiveChannels[roomIndex] = append(session.ActiveChannels[roomIndex],conn)
 	r := self.RoomStorage[roomIndex]
 	room := &r
 	messages := make([]string,0)
+	fmt.Printf("%+v\n",**room)
 	if (**room).Messages != nil {
 		messages = (**room).Messages
 	}

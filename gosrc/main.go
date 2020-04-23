@@ -90,7 +90,7 @@ func setUpRoutes() {
 }
 
 func (self *Session) editUser (writer http.ResponseWriter, reader *http.Request) {
-	fmt.Println("settings")
+	appendToLogFile("settings")
 	upgrader.CheckOrigin = func(r *http.Request) bool {
 		return true
 	}
@@ -122,6 +122,20 @@ func SetupCloseHandler() {
 		session.saveData(USER_DIR)
 		os.Exit(0)
 	}()
+}
+
+func appendToLogFile(args ... string) {
+	var str string
+	for i := 0; i < len(args); i++ {
+		str = str + args[i]
+	}
+	file, err := os.OpenFile("logs", os.O_CREATE, 0700)
+	handleErr(err)
+	file, err = os.OpenFile("logs",os.O_APPEND|os.O_WRONLY, 0700)
+	handleErr(err)
+	defer file.Close()
+	_,err = file.WriteString(str+"\n")
+	handleErr(err)
 }
 
 func (self *Session) restoreData(dirname string) {

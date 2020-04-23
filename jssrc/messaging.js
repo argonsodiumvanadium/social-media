@@ -27,7 +27,6 @@ async function openRoomCreationDialog() {
 		}
 
 		socket.send(JSON.stringify(request));
-        alert("sent")
 	}
 
     async function renderRoomModalDialog() {
@@ -89,7 +88,7 @@ async function openRoomCreationDialog() {
             } else if (members.length == 0) {
                 alert("No one was chosen")
             } else if (user_data.RoomNames.indexOf($("room-name-input").value) != -1) {
-                alert("The room with that name alreadyt exists")
+                alert("The room with that name already exists")
             } else {
                 sendRoomCreationDataAndCreateRoom($("room-name-input").value,members)
             }
@@ -269,7 +268,7 @@ openConnectionAndStartListening = room => {
 	};
 
 	conn.onmessage = function(event) {
-        console.log(event.data)
+        console.log("got"+event.data)
         try {
             val = JSON.parse(event.data)
             for (v of val.reverse()) {
@@ -289,9 +288,7 @@ openConnectionAndStartListening = room => {
 
 	conn.onopen = function () {
         conn.send(room.Id.toString());
-        conn.send("+");
-        conn.send("+");
-        conn.send("+");
+        console.log("send")
         conn.send("+");
     }
 }

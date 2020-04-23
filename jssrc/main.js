@@ -1,6 +1,6 @@
 const SITE_NAME = "NAME";
 const PORT = "9000";
-const IP = "ec2-13-232-236-137.ap-south-1.compute.amazonaws.com"
+const IP = "13.232.236.137"
 
 const GREEN = "#00dd44",WHITE = "#ffffff";
 const BACK_GRAY = "#777777",RED = "#ff4400";
@@ -262,7 +262,7 @@ renderComponent = comp => {
 			getActivityDataForRenderingActivityPane();
 			break;
 			case "Home":
-			renderVue();
+			refreshJS();
 		}
 	}
 }

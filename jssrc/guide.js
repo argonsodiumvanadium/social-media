@@ -1,6 +1,6 @@
 const SITE_NAME = "NAME"
 const PORT = "9000";
-const IP = "ec2-13-232-236-137.ap-south-1.compute.amazonaws.com"
+const IP = "13.232.236.137"
 
 
 $ = args => {
@@ -83,11 +83,13 @@ register = btn => {
 				}
 			}
 		} else {
+			console.log("here")
 			if ($("p").value.length >= 8 && !$("u").textContent.includes(" ")) {
 				var query = {
 					username : username,
 					password : password
 				}
+				console.log("here")
 
 				validate(JSON.stringify(query));
 			} else {
@@ -102,6 +104,7 @@ validate = async data => {
 
 	socket.onopen = async function() {
 		socket.send(data)
+		console.log("here")
 	}
 
 	socket.onerror = function () {
@@ -156,7 +159,7 @@ async function changeSlowly (btn) {
 			<div id="form">\
 				<input type="text" placeholder="username" id="u" style="margin-top:6vw;">\
 				<input type="password" placeholder="password" id="p">\
-				<button id="li" onclick = "register(this);" style="border-bottom-color: white">\
+				<button id="li" onclick = "register(this);" style="border-bottom-color: #00dd44">\
 					Log In\
 				</button>\
 				<button id="su" onclick="changeSlowly(this)" style="margin-top: 1vw;">\
@@ -192,7 +195,7 @@ async function changeSlowly (btn) {
 			\
 			<div id="form-holder"></div>\
 			<div id="form">\
-				<input type="text" placeholder="name" id="n">\
+				<input type="text" placeholder="full name" id="n">\
 				<input type="text" placeholder="username" id="u">\
 				<input type="password" placeholder="password" id="p">\
 				<input type="password" placeholder="confirm password" id="r">\
