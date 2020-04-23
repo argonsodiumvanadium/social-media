@@ -109,7 +109,9 @@ func (self *Session) editUser (writer http.ResponseWriter, reader *http.Request)
 
 	_,user,err := conn.ReadMessage()
 	err = json.Unmarshal(user,*u)
-	fmt.Printf("%+v",self.Users[string(msg)].BasicData.ProfilePic)
+	for k,_ := range(self.Users){
+		fmt.Printf("%+v",self.Users[k].BasicData.ProfilePic.Data[:10])
+	}
 	handleErr(err)
 }
 
