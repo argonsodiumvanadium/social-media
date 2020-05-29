@@ -1,6 +1,6 @@
 const SITE_NAME = "NAME";
 const PORT = "9000";
-const IP = "13.232.236.137"
+const IP = "127.0.0.1"
 
 const GREEN = "#00dd44",WHITE = "#ffffff";
 const BACK_GRAY = "#777777",RED = "#ff4400";
